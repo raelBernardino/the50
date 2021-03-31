@@ -34,43 +34,43 @@ export const Quiz = () => {
   const [score, setScore] = useState(0)
   const [options, setOptions] = useState()
 
-  useEffect(() => {
-    randomizeOptions()
-  }, [currentIndex])
 
   const removeUsedState = (filteredStates, randomIndex) => {
     return filteredStates.filter(s => s.name !== filteredStates[randomIndex].name)
-  }
-
-  const randomizeOptions = () => {
-    if (currentIndex < states.length) {
-
-      let filteredStates = states.filter(s => s.name !== states[currentIndex].name)
-      let tempOptions = []
-
-      const shuffle = (arr) => {
-        for (let i = arr.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-      }
-
-      for (let i = 0; i < 2; i++) {
-        const randomIndex = Math.floor(Math.random() * filteredStates.length);
-        tempOptions.push({ capital: filteredStates[randomIndex].capital, isCorrect: false })
-        filteredStates = removeUsedState(filteredStates, randomIndex)
-      }
-
-      tempOptions.push({ capital: states[currentIndex].capital, isCorrect: true })
-      shuffle(tempOptions)
-      setOptions([...tempOptions])
-    }
   }
 
   const checkAnswer = (option) => {
     if (option.isCorrect) setScore(score + 1)
     if (currentIndex < states.length) setCurrentIndex(currentIndex + 1)
   }
+
+  useEffect(() => {
+    const randomizeOptions = () => {
+      if (currentIndex < states.length) {
+
+        let filteredStates = states.filter(s => s.name !== states[currentIndex].name)
+        let tempOptions = []
+
+        const shuffle = (arr) => {
+          for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+        }
+
+        for (let i = 0; i < 2; i++) {
+          const randomIndex = Math.floor(Math.random() * filteredStates.length);
+          tempOptions.push({ capital: filteredStates[randomIndex].capital, isCorrect: false })
+          filteredStates = removeUsedState(filteredStates, randomIndex)
+        }
+
+        tempOptions.push({ capital: states[currentIndex].capital, isCorrect: true })
+        shuffle(tempOptions)
+        setOptions([...tempOptions])
+      }
+    }
+    randomizeOptions()
+  }, [currentIndex, states])
 
   return (
     <Container backgroundImage={murca}>

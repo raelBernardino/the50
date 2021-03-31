@@ -17,15 +17,15 @@ export const Question = ({
       width="100vw"
       jContent="flex-end"
       fDirection="column">
-      <Typography color="white" weight="900" size="xl">{name}</Typography>
+      <Typography style={{ paddingBottom: "50px" }} color="white" weight="900" size="xl">{name}</Typography>
       <Container
         height="275px"
         width="100%"
         fDirection="column"
-        padding="0 0 50% 0">
+        padding="0 0 100px 0">
         {
           options?.map((option, i) => <Button
-            backgroundColor="transparent"
+            backgroundColor="rgba(0, 0, 0, .1)"
             color="white"
             onClick={() => checkAnswer(option)}
             width="80%">
